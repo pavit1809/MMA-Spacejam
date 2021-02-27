@@ -3,10 +3,10 @@ import { ThemeProvider as MuiThemeProvider } from '@material-ui/core/styles';
 import validateInfo from './error.js';
 import { Link,Redirect } from 'react-router-dom';
 import Axios from "axios";
-import TnCModal from "./TnCModal"; 
-import {
+import TnCModal from "./TnCModal";
+ import {
   TextField,
-  Button, 
+  Button,
   Container,
   LinearProgress,
   Radio,

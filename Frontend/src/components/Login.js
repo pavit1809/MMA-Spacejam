@@ -3,6 +3,7 @@ import { Link,Redirect } from 'react-router-dom';
 import "../App.css";
 import Navbar from "./navbar";
 import Footer from "./Footer";
+import LoginHome from "./LoginHome";
 import Axios from "axios";
 import "./Login.css";
 import { TextField, LinearProgress } from "@material-ui/core";
@@ -152,7 +153,7 @@ const mapStateToProps = state => {
     userInfo:state.userInfo
   };
 };
-
+ 
 const mapDispatchToProps = dispatch =>{
   return{
     onChangeUserInfo: (userInfo) => dispatch({type:actionTypes.CHANGE_STATE , userInfo:userInfo})

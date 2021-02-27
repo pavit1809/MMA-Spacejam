@@ -1,5 +1,5 @@
 *{
-   /*background: #000;*/
+  /*background: #000;*/
 }
 .footer-container {
   background-color: #a5a89f;
@@ -19,7 +19,7 @@
   display: flex;
   justify-content: center;
 }
-
+ 
 .footer-link-wrapper {
   display: flex;
 }

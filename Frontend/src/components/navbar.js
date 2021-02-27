@@ -12,11 +12,11 @@ function Navbar1() {
         <Nav.Link style={{marginRight:'50px'}} as={Link} to='/' active>Home</Nav.Link>
         <NavDropdown style={{marginRight:'50px'}} title="Register" id="collasible-nav-dropdown" active>
           <NavDropdown.Item as={Link} to='/register' >User</NavDropdown.Item>
-          <NavDropdown.Item as={Link} to='/' >Test Center</NavDropdown.Item>
+          <NavDropdown.Item as={Link} to='/centerRegister' >Test Center</NavDropdown.Item>
         </NavDropdown>
         <NavDropdown style={{marginRight:'50px'}} title="Login" id="collasible-nav-dropdown" active>
           <NavDropdown.Item as={Link} to='/login' >User</NavDropdown.Item>
-          <NavDropdown.Item as={Link} to='/' >Test Center</NavDropdown.Item>
+          <NavDropdown.Item as={Link} to='/centerLogin' >Test Center</NavDropdown.Item>
         </NavDropdown>
       </Nav>
     </Navbar.Collapse>
@@ -25,3 +25,4 @@ function Navbar1() {
 }
 
 export default Navbar1;
+ 

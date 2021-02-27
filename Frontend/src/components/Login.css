@@ -2,7 +2,7 @@
   background-size: cover;
 
 }
- 
+
 .base-container {
   width: 30vw;
   display: flex;
@@ -21,7 +21,7 @@
   font-size: 5vh;
   font-family: "Open Sans", sans-serif;
 }
-
+ 
 .content {
   display: flex;
   flex-direction: column;

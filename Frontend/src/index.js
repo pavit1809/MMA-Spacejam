@@ -38,8 +38,12 @@ const store = createStore(
 
 store.subscribe(() => {
   saveState({
-  	userInfo:store.getState().userInfo,
-  	check:store.getState().check,
+    userInfo:store.getState().userInfo,
+    check:store.getState().check,
+    testInfo:store.getState().testInfo,
+    centreList:store.getState().centreList,
+    slots:store.getState().slots,
+    CentreValue:store.getState().CentreValue,
   });
 });
 
@@ -47,7 +51,7 @@ store.subscribe(() => {
 
 ReactDOM.render(
     <Provider store={store}>
-    	<App />
+      <App />
     </Provider>
   ,document.getElementById('root')
 );

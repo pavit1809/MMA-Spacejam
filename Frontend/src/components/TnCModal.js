@@ -31,5 +31,5 @@ function TnCModal(props) {
       </Modal.Footer>
     </Modal>
   );
-}
-export default TnCModal; 
+} 
+export default TnCModal;
