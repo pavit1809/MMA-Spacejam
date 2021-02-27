@@ -151,6 +151,7 @@ router.post('/center/newotps',Authmiddleware,async (req,res)=>{
       }
 })
 
+//Route-4
 router.post('/review/new',async (req,res)=>{
       try{
             console.log(req.body);
@@ -164,6 +165,51 @@ router.post('/review/new',async (req,res)=>{
       }catch(err){
             console.log(err);
             res.status(400).send();
+      }
+})
+
+//Route-5
+router.post('/center/login',async (req,res)=>{
+      try{
+            const center=await Center.findbycredentials(req.body.email,req.body.password);
+            if (center.Status==false){
+                  res.status(400).send();
+            }
+            else{
+                  const token=await center.generateauthtoken();
+                  res.status(200).send({center,token});
+            }
+      }catch(err){
+            console.log(err);
+            res.status(404).send("Center not registered");
+      }
+});
+
+//Route-6
+router.post('/center/prevapp',Authmiddleware,async(req,res)=>{
+      try{
+            const appointments=await Appointment.find({center_id:req.body.centerInfo.data.center._id,Attended:true});
+            const filtered=AppointmentHelper.arrange(appointments);
+            let ret=[];
+            for(let i=0;i<filtered.length;i++){
+                  const currentuser=await User.findOne({_id:filtered[i].user_id});
+                  ret.push({
+                        Name:currentuser.UserName,
+                        Test:filtered[i].facilityused,
+                        Date:filtered[i].dateofappointment,
+                        Slot:filtered[i].Slotdetails,
+                        PhoneNo:currentuser.PhoneNumber,
+                        Email:currentuser.Email,
+                        appid:filtered[i]._id,
+                        userid:currentuser._id,
+                        flag:((filtered[i].ResultStatus==false)?1:0)
+                  });
+            }
+            // console.log(ret);
+            res.status(200).send(ret);
+      }catch(err){
+            console.log(err);
+            res.status(400).send(err);
       }
 })
 
