@@ -3,6 +3,7 @@ const User=require('../models/user');
 const router=new express.Router();
 const Authmiddleware=require('../middleware/auth');
 const RegistrationUtil=require('../helpers/Registration-helper');
+const MainHelper=require('../helpers/all-utility');
 const Vonage = require('@vonage/server-sdk');
 const nodemailer=require('nodemailer');
 const axios = require('axios').default;
@@ -238,5 +239,50 @@ router.post('/user/newappointment',Authmiddleware,async(req,res)=>{
             res.status(400).send(err);
       }
 });
+
+//Route-8:Sending all appointments
+router.post('/user/allappointments',Authmiddleware,async(req,res)=>{
+      try{
+            // console.log(req.body);
+            const userinquestion=await User.find({_id:req.body.userInfo.data.user._id});
+            const allappointments=await Appointment.find({user_id:req.body.userInfo.data.user._id});
+            //it can be an array of objects
+            let ret=[];       
+            if (allappointments.length==0){
+                  res.status(404).send();
+            }
+            else{
+                  for(let i=0;i<allappointments.length;i++){
+                        const concernedcenter=await Center.findOne({_id:allappointments[i].center_id});
+                        ret.push(MainHelper.getformatshowappointment(concernedcenter,allappointments[i]));
+                  }
+                  res.status(200).send(ret);
+            }
+      }catch(err){
+            console.log(err);
+            res.status(400).send(err);
+      }
+});
+
+//Route-9:Sending all available facilities
+router.post('/user/getallfacilities',Authmiddleware,async(req,res)=>{
+      try{
+            let s=new Set();
+            const alldata=await Facility.find({});
+            for(let i=0;i<alldata.length;i++)
+            {
+                  // console.log(alldata[i].owner);
+                  const asscen=await Center.findOne({_id:alldata[i].owner,Status:true});
+                  if (asscen!=undefined)
+                  {
+                        s.add(alldata[i].FacilityName);
+                  }
+            }
+            const ret=Array.from(s);
+            res.status(200).send(ret);
+      }catch(err){
+            res.status(404).send();
+      }
+})
 
 module.exports=router;
