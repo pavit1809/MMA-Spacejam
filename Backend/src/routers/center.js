@@ -151,4 +151,20 @@ router.post('/center/newotps',Authmiddleware,async (req,res)=>{
       }
 })
 
+router.post('/review/new',async (req,res)=>{
+      try{
+            console.log(req.body);
+            const center=await Center.findOne({_id:req.body._id});
+            center.Reviews.push({
+                  text:req.body.review,
+                  stars:req.body.rating
+            });
+            await center.save();
+            res.status(200).send();
+      }catch(err){
+            console.log(err);
+            res.status(400).send();
+      }
+})
+
 module.exports=router;

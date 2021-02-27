@@ -1,13 +1,19 @@
 const express=require('express');
 const User=require('../models/user');
 const router=new express.Router();
+const Center=require('../models/center');
+const Facility=require('../models/facilities');
+const Appointment=require('../models/appointment');
 const Authmiddleware=require('../middleware/auth');
 const RegistrationUtil=require('../helpers/Registration-helper');
+
+const Apphelper=require('../helpers/Appointment-helper');
 const MainHelper=require('../helpers/all-utility');
 const Vonage = require('@vonage/server-sdk');
 const nodemailer=require('nodemailer');
 const axios = require('axios').default;
 const path=require('path');
+const bcrypt=require('bcryptjs');
 
 require('dotenv').config({path:path.resolve(__dirname, '../../.env') });
 
@@ -282,6 +288,105 @@ router.post('/user/getallfacilities',Authmiddleware,async(req,res)=>{
             res.status(200).send(ret);
       }catch(err){
             res.status(404).send();
+      }
+})
+
+//Route-10:Sending update otps
+router.post('/user/sendotp',Authmiddleware,async(req,res)=>{
+      // console.log(req.body);
+      try{
+            const user=await User.findOne({_id:req.body.id});
+            const otp=RegistrationUtil.GetOtp();
+            if (parseInt(req.body.flag)==0){     
+                  const emailbody=RegistrationUtil.EmailBody(req.body.value,otp);
+                  // let emailinfo=await transporter.sendMail(emailbody);
+                  user.RecentEmailOtps.push(otp);
+                  await user.save();
+                  res.status(200).send("Otp sent successfully");
+            }
+            else{
+                  const messagebody=RegistrationUtil.MessageBody(otp);
+                  // let messageinfo=await vonage.message.sendSms('Team',"91"+user.PhoneNumber,messagebody);
+                  user.RecentMobileOtps.push(otp);
+                  await user.save();
+                  res.status(200).send("Otp sent successfully");
+            }
+      }catch(err){
+            console.log(err);
+            res.send(400).send(err);
+      }
+})
+
+//Route-11:Verifying update otps
+router.post('/user/verifyotponupd',Authmiddleware,async (req,res)=>{
+      try{
+            const user=await User.findOne({_id:req.body.id});
+            if (parseInt(req.body.flag)==0){
+                  if (user.RecentEmailOtps[user.RecentEmailOtps.length-1]==req.body.otp){
+                        res.status(200).send('Verified');
+                  }
+                  else{
+                        res.status(400).send('Invalid Otp');
+                  }
+            }
+            else{
+                  if (user.RecentMobileOtps[user.RecentMobileOtps.length-1]==req.body.otp){
+                        res.status(200).send('Verified');
+                  }
+                  else{
+                        res.status(400).send('Invalid Otp');
+                  }
+            }
+      }catch(err){
+            console.log(err);
+            res.status(400).send(err);
+      }
+})
+
+//Route-12:Update user finally
+router.post('/user/update',Authmiddleware,async (req,res)=>{
+      try{
+            const reqobj=req.body.data;
+            let curruser=await User.findOne({_id:reqobj.id});
+            const ismatch=await bcrypt.compare(reqobj.Validitypassword,curruser.Password);
+            if (ismatch){
+                  curruser=await MainHelper.assignuserchanges(curruser,reqobj);
+                  // console.log(curruser);
+                  const ProvidedAddress=curruser.NearestLandmark+' '+curruser.City+' '+curruser.Pincode+' '+curruser.State+' '+curruser.Country;
+                  // console.log(ProvidedAddress);
+                  const response=await axios.get('https://geocode.search.hereapi.com/v1/geocode?q='+ProvidedAddress+'&apiKey=tbeKC9DJdnRIZ1p5x496OgpIUj2vbL5CWADs8czW5Rk');
+                  // console.log(response.data);
+                  const coordinates=Object.values(response.data.items[0].position);
+                  curruser.PositionCoordinates.length=0;
+                  curruser.PositionCoordinates[0]=(coordinates[0]);
+                  curruser.PositionCoordinates[1]=(coordinates[1]);
+                  await curruser.save();
+                  // console.log(curruser);
+                  const token=req.token;
+                  res.status(200).send({user:curruser,token});
+            }
+            else{
+                  res.status(400).send("Password Mismatch")
+            }
+      }catch(err){
+            //Mostly due to invalid address
+            console.log(err);
+            res.status(400).send(err);
+      }
+})
+
+//Route-13:Logging a user out
+router.post('/user/logout',Authmiddleware,async (req,res)=>{
+      try{
+            // console.log(req.user);
+            req.user.tokens=[];
+            req.user.RecentEmailOtps=[];
+            req.user.RecentMobileOtps=[];
+            await req.user.save();
+            res.status(200).send();
+      }catch(err){
+            console.log(err);
+            res.status(400).send(err);
       }
 })
 
