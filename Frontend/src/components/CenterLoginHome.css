@@ -1,0 +1,149 @@
+.cbody{
+  background: linear-gradient(315deg, #b8c6db 0%, #f5f7fa 74%) ;
+}
+.reviews{
+	height:50vh;
+	width:50vw;
+  padding:7px;
+	margin-bottom:20vh;
+	margin-left:5vw;
+  box-shadow: -10px 25px 50px #a5a89f;
+  border:2px solid bisque;
+  border-radius: 10px;
+} 
+.Button-Body {
+  font-family: 'Poppins', sans-serif;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  min-height: 10vh;
+  margin-top:5vh;
+  -webkit-font-smoothing: antialiased;
+}
+.card{
+  height:10vh;
+
+}
+.quotes {
+  width: 80vw;
+  min-height: 300px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  z-index: 2;
+}
+
+.quotes .box {
+  position: relative;
+  width: 25vw;
+  height: 30vh;
+  min-height: 250px;
+  background: #f2f2f2;
+  color:black;
+  overflow: hidden;
+  transition: all 0.5s ease-in;
+  z-index: 2;
+  box-sizing: border-box;
+  padding: 30px;
+  border:2px solid bisque;
+  box-shadow: -10px 25px 50px #a5a89f;
+}
+
+.quotes .box::before {
+  content: '\201C';
+  position: absolute;
+  top: -20px;
+  left: 5px;
+  width: 100%;
+  font-size: 120px;
+  opacity: 0.2;
+  background: transparent;
+  pointer-events: none;
+}
+
+.quotes .box::after {
+  content: '\201D';
+  position: absolute;
+  bottom: -10%;
+  right: 5%;
+  font-size: 120px;
+  opacity: 0.2;
+  background: transparent;
+  filter: invert(1);
+  pointer-events: none;
+}
+
+.quotes .box p {
+  margin: 0;
+  padding: 10px;
+  font-size: 1.4rem;
+}
+
+.quotes .box h2 {
+  position: absolute;
+  margin: 0;
+  padding: 0;
+  bottom: 10%;
+  right: 10%;
+  font-size: 1.5rem;
+}
+
+.quotes .box:hover {
+  color: #f2f2f2;
+  box-shadow: 20px 50px 100px rgba(0, 0, 0, 0.5);
+}
+
+.quotes .bg {
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 1;
+  opacity: 0;
+  transition: all 0.5s ease-in;
+  pointer-events: none;
+  width: 100%;
+  height: 200%;
+  overflow: hidden;
+}
+
+.quotes .box.box1:hover,
+.quotes .box.box1:hover~.bg {
+  opacity: 1;
+  background: #7FFF00;
+background: linear-gradient(135deg, #13547a  15%,#80d0c7 100%);
+filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#e2a9e5', endColorstr='#2b94e5',GradientType=1 );
+}
+
+.quotes .box.box2:hover,
+.quotes .box.box2:hover~.bg {
+  opacity: 1;
+  background: #632c65;
+background: linear-gradient(135deg, #09203f 15%,#537895 100%);
+filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#632c65', endColorstr='#56a5e2',GradientType=1 );
+}
+
+.quotes .box.box3:hover,
+.quotes .box.box3:hover~.bg {
+  opacity: 1;
+  background: #4b384c;
+background: linear-gradient(135deg, #ff758c   15%,#ff7eb3 100%);
+filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#4b384c', endColorstr='#da5de2',GradientType=1 );
+}
+.button {
+  background-color: #008cba; /* Green */
+  border: none;
+  color: white;
+  padding: 15px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 4px 2px;
+  cursor: pointer;
+}
+.button:disabled {
+  opacity: 0.5;
+}
