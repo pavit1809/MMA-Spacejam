@@ -184,5 +184,59 @@ router.post('/user/match',Authmiddleware,async (req,res)=>{
       }
 }) 
 
+// Route-6:Sending all available slots to the user
+router.post('/user/allslots',Authmiddleware,async (req,res)=>{
+      // console.log(req.body);
+      try{
+            const own=req.body.flag1.cen._id;
+            const fac=req.body.flag1.service;
+            const date=req.body.flag1.askeddate;
+            const facility=await Facility.findOne({owner:own,FacilityName:fac});
+            let ret=MainHelper.getallopenslots(facility,date);
+            const allappointments=await Appointment.find({userid:req.user._id,Attended:false});
+            let fineapp=Apphelper.arrange(allappointments);
+            if (ret.length!=0){
+                  const finalretvalue={
+                        allslots:ret,
+                        center:req.body.flag1.cen,
+                        service:fac,
+                        dis:req.body.flag1.dis,
+                        costing:req.body.flag1.costing,
+                        concerneddate:req.body.flag1.askeddate,
+                        fine:fineapp.length*100
+                  }
+                  // console.log(finalretvalue);
+                  res.status(200).send(finalretvalue);
+            }
+            else{
+                  res.status(404).send("No empty slot found for the date");
+            }
+      }catch(err){
+            console.log(err);
+            res.status(404).send("No Open Slots found!");
+      }
+})
+
+//Route-7:Creating a new appointment
+router.post('/user/newappointment',Authmiddleware,async(req,res)=>{
+      try{
+            const queryobj=req.body.CentreValue;
+            const existing=await Appointment.findOne({user_id:req.body.userInfo.data.user._id,dateofappointment:queryobj.askeddate,Slotdetails:req.body.selectedTime[0]});
+            if (existing==null){
+                  const newappointment=new Appointment(MainHelper.getformatappointment(req));
+                  let facility=await Facility.findOne({Price:queryobj.costing,FacilityName:queryobj.service,owner:queryobj.cen._id});
+                  facility=MainHelper.modifyslotdata(facility,queryobj,req);
+                  await facility.save();
+                  newappointment.save();
+                  res.status(200).send(newappointment);
+            }
+            else{
+                  res.status(400).send("Same Booking already exists!");
+            }
+      }catch(err){
+            console.log(err);
+            res.status(400).send(err);
+      }
+});
 
 module.exports=router;
