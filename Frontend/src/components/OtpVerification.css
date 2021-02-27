@@ -1,0 +1,20 @@
+*{
+	font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande',
+    'Lucida Sans', Arial, sans-serif;
+}
+
+.otp1btn{
+	position: absolute;
+	margin-left: 30vw;
+	width:20vw;
+}
+
+.otp2btn{
+	position: absolute;
+	margin-left: 65vw;
+	width:2vw;
+}
+.err-msg{
+  margin-left:30vw;
+}
+ 

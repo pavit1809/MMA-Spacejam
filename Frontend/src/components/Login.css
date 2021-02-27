@@ -1,0 +1,145 @@
+.Login-bg{
+  background-size: cover;
+
+}
+ 
+.base-container {
+  width: 30vw;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background:#fff;
+  filter:none;
+  border-radius: 2%;
+  border:solid #000;
+  box-shadow: 0px 0px 14px 0.3px #0e81ce96;
+  padding-top: 5vh;
+  padding-bottom: 5vh;
+  margin-left: 35vw;
+}
+.header {
+  font-size: 5vh;
+  font-family: "Open Sans", sans-serif;
+}
+
+.content {
+  display: flex;
+  flex-direction: column;
+}
+.image {
+      width: 21em;
+}
+.image img {
+  width: 100%;
+  height: 100%;
+}
+
+.form {
+  margin-top: 2em;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.form-group {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  width: content;
+}
+.form-group label {
+  font-size: 20px;
+}
+.form-group input {
+  margin-top: 6px;
+  min-width: 18em;
+  height: 37px;
+  padding: 0px 10px;
+  font-size: 16px;
+  font-family: "Open Sans", sans-serif;
+  background-color: #f3f3f3;
+  border: 0;
+  border-radius: 4px;
+  margin-bottom: 31px;
+  transition: all 250ms ease-in-out;
+}
+.form-group input:hover {
+  background-color: #ffffff;
+  box-shadow: 0px 0px 14px 0.3px #0e81ce96;
+}
+
+.form-group input:focus {
+  outline: none;
+  box-shadow: 0px 0px 12px 0.8px #3474dbb2;
+}
+.footer:hover {
+  background-color: #ffffff;
+  box-shadow: 0px 0px 14px 0.3px bisque;
+}
+
+.footer button{
+  font-size: 3vh;
+}
+
+.err-msg{
+  margin:2vh 3vw;
+}
+
+.view-head{
+  font-size: 3vw;
+  font-weight: bold;
+  display: flex;
+  justify-content: center;
+  margin-top: -9vh;
+  margin-bottom: 4vh;
+}
+
+.pres-img{
+  border-radius: 10%;
+  object-fit: cover;
+  transition: all 0.2s linear;
+  display: block;
+}
+
+.pres-img-wrapper{
+  border-radius: 10%;
+  overflow: hidden;
+  color: #fff;
+  box-shadow: 0px 0px 14px 0.3px #0e81ce96;
+  max-width: calc((100%) - 60px);
+}
+
+.pres-img:hover {
+  transform: scale(1.1);
+  box-shadow: 0px 0px 14px 0.3px #0e81ce96;
+}
+
+.pres-date{
+  display: flex;
+  justify-content: center;
+  margin-top: 10vw;
+}
+
+.pres-col{
+  padding-right: 1vw;
+  padding-left: 1vw;
+  flex: 1;
+  max-width: 40vw;
+  flex-basis: 10vw;  
+}
+
+.doc-col{
+  padding-right: 1vw;
+  padding-left: 1vw;
+  flex: 1;
+  max-width: 100vw;
+  flex-basis: 10vw;
+}
+
+.doc-row{
+   display: flex;
+  flex-wrap: wrap;
+  align-content: stretch;
+  margin-left: 5vw;
+  margin-top: 5vh;
+}
+

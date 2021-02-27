@@ -1,0 +1,83 @@
+.txtfld{
+	width:50vw;
+	margin-left: 45vw;
+}
+.drpdwn{
+	width:50vw;
+	height:10vh;
+	margin-left: 45vw;
+}  
+.form_input{
+	background: linear-gradient(315deg, #b8c6db 0%, #f5f7fa 74%) ;
+}
+*{
+	font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande',
+    'Lucida Sans', Arial, sans-serif;
+}
+
+
+.btn1{
+	position: absolute;
+	margin-left: 65vw;
+	width:2vw;
+}
+
+.btn2{
+	position: absolute;
+	left: 45vw;
+	width:180px;
+}
+
+.terms h2{
+	position: absolute;
+	margin-left:29vw;
+	margin-top: 2vh;
+	
+}
+.reg-row {
+  display: flex;
+  margin-bottom: -15px;
+  flex-wrap: wrap;
+  align-content: stretch;
+}
+.reg-img{
+		height:33vw;
+		width:40vw;
+		margin-left:3vw;
+		
+}
+
+.reg-col img{
+  display: cover;
+  border-radius: 20%;
+  height: 100%;
+  width:100%;
+}
+.reg-col {
+  flex: 1;
+  max-width: 1vw;
+  flex-basis: 50%;
+}
+.no-chng{
+	width:100vw;
+	margin-left: -3vw;
+}
+.bkap-btn{
+	text-align: center;
+	position: relative;
+	transition:margin-top .5s ease-in;
+
+}
+.bkap-btn2{
+	text-align: center;
+	position: relative;
+	margin-top:-80vh;
+	transition:margin-top .5s ease-in;
+}
+.verify{
+	position:relative;
+	background:#fcffa4;
+  display: flex;
+	text-align: center;
+	justify-content: center;
+}
