@@ -119,3 +119,70 @@ router.post('/user/newotps',Authmiddleware,async (req,res)=>{
             res.status(404).send();
       }
 });
+
+// Route-5:Sending Matched center
+router.post('/user/match',Authmiddleware,async (req,res)=>{
+      // console.log(req.body);
+      try{
+            const requiredFacility=req.body.test;
+            const requiredDate=req.body.date;
+            const user=req.body.userInfo.data.user;
+            if (user.Status==false){
+                  res.status(403).send("User Not Verified");
+            }
+            else{
+                  const step1=await Facility.find({FacilityName:requiredFacility});
+                  let ids=[];
+                  for(let i=0;i<step1.length;i++){
+                        const element=step1[i];
+                        // console.log(element);
+                        const v1=element.SlotAvailability.find(e=> e.date==requiredDate);
+                        // console.log(v1);
+                        if (v1!=undefined){
+                              let check=false;
+                              for(let j=0;j<v1.slotinfo.length;j++){
+                                    let k=v1.slotinfo[j];
+                                    check=check | (k.det2>0);     
+                              }
+                              if (check!=false){
+                                    const ob={
+                                          own:element.owner,
+                                          costing1:element.Price
+                                    }
+                                    ids.push(ob);
+                              }
+                        }
+                  };
+                  let ret=[];
+                  for(let j=0;j<ids.length;j++)
+                  {
+                        let i=ids[j];
+                        //handle unverified centres
+                        const center=await Center.findOne({_id:i.own,Status:true});
+                        const clientcoor=user.PositionCoordinates[0].toString()+','+user.PositionCoordinates[1].toString();
+                        const centercoor=center.PositionCoordinates[0].toString()+','+center.PositionCoordinates[1].toString();
+                        const url='https://router.hereapi.com/v8/routes?transportMode=car&origin='+clientcoor+'&destination='+centercoor+'&return=Summary&apiKey='+process.env.API_KEY;
+                        const response=await axios.get(url);
+                        let uallopts=new Set(center.Alloptions);
+                        uallopts=Array.from(uallopts);
+                        const retobj={
+                              cen:center,
+                              dis:response.data.routes[0].sections[0].summary.length/1000,
+                              // dis:100,
+                              costing:i.costing1,
+                              service:requiredFacility,
+                              askeddate:requiredDate,
+                              tags:uallopts,
+                        };
+                        ret.push(retobj);
+                  }
+                  res.status(200).send(ret);
+            }
+      }catch(err){
+            console.log(err);
+            res.status(404).send("No centers found");
+      }
+}) 
+
+
+module.exports=router;
