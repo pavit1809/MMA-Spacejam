@@ -26,21 +26,22 @@ Using this, the testing labs will also have a single place to check in with all 
  
 # Tech Stack: (Web Dev, NLP)
 
-   Tools:
-     Visual Studio Code
-     Sublime Text
-     Postman
-     ngrok
-   Robo 3T
-     Chrome Developer Tools
-     Google Colab
-   Languages:
-     Python 
-     Javascript
-   Frameworks:
-     Reactjs
-     Nodejs
-     Flask App
+   Tools:<br>
+     Visual Studio Code<br>
+     Sublime Text<br>
+     Postman<br>
+     ngrok<br>
+     Robo 3T<br>
+     Chrome Developer Tools<br>
+     Google Colab<br>
+     MongoDB <br>
+   Languages:<br>
+     Python<br>
+     Javascript<br>
+   Frameworks:<br>
+     Reactjs<br>
+     Nodejs<br>
+     Flask App<br>
      
 # Implementation Video:
  
