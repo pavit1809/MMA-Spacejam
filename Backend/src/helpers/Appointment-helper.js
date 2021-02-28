@@ -103,4 +103,4 @@ const EmailBody=(emailid,name,mess,centerName,time,date,test)=>{
       return message;
 }
 
-module.exports={arrange,comparedatecurr,arrange1,comparedatecurr1,arrange2,EmailBody};
+module.exports={arrange,comparedatecurr,arrange1,comparedatecurr1,arrange2,EmailBody,comp1};
