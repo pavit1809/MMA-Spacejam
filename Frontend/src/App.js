@@ -9,6 +9,9 @@ import Login from './components/Login';
 import CenterLogin from './components/CenterLogin';
 import LoginHome from './components/LoginHome';
 import CenterLoginHome from './components/CenterLoginHome';
+import CenterSendResult from './components/CenterSendResult';
+import CenterAppOfDay from './components/CenterAppOfDay';
+import CenterCancelApp from './components/CenterCancelApp';
 import Tests from './components/Tests';
 import Profile from './components/Profile';
 import selectionPage1 from './components/selectionPage1';
@@ -28,6 +31,9 @@ function App() {
           <Route path='/login' exact component={Login} />
           <Route path='/centerLogin' exact component={CenterLogin} />
           <Route path='/centerLoginHome' exact component={CenterLoginHome} />
+          <Route path='/centerSendResult' exact component={CenterSendResult} />
+          <Route path='/centerAppOfDay' exact component={CenterAppOfDay} />
+          <Route path='/centerCancelApp' exact component={CenterCancelApp} />
           <Route path='/loginHome' exact component={LoginHome} />
           <Route path='/test' exact component={Tests} />
           <Route path='/profile' exact component={Profile} />
