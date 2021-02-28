@@ -15,14 +15,14 @@ Using this, the testing labs will also have a single place to check in with all 
 
 # Facilities Provided:
 
- -> User and Test Centre Registration and Login
- -> Validation using OTP
- -> Test Centre Appointment booking using Geolocation Here API to show the customers the nearest test centre offering the tests wanted by the user on a particular date and slot
- -> Viewing history of all appointments by User
- -> Test Centre have the option of sending all the results using email, viewing all appointments and also cancelling
- -> They can also add facilities for other tests
- -> Review and Rating collection from past customers
- -> Sentimental Analysis of the Reviews using NLP SVC Model for informing users what opinion people have of that test centre for better decision making
+ -> User and Test Centre Registration and Login<br>
+ -> Validation using OTP<br>
+ -> Test Centre Appointment booking using Geolocation Here API to show the customers the nearest test centre offering the tests wanted by the user on a particular date and slot<br>
+ -> Viewing history of all appointments by User<br>
+ -> Test Centre have the option of sending all the results using email, viewing all appointments and also cancelling<br>
+ -> They can also add facilities for other tests<br>
+ -> Review and Rating collection from past customers<br>
+ -> Sentimental Analysis of the Reviews using NLP SVC Model for informing users what opinion people have of that test centre for better decision making<br>
  
 # Tech Stack: (Web Dev, NLP)
 
@@ -30,6 +30,7 @@ Using this, the testing labs will also have a single place to check in with all 
      Visual Studio Code
      Sublime Text
      Postman
+     ngrok
    Robo 3T
      Chrome Developer Tools
      Google Colab
@@ -39,6 +40,7 @@ Using this, the testing labs will also have a single place to check in with all 
    Frameworks:
      Reactjs
      Nodejs
+     Flask App
      
 # Implementation Video:
  
