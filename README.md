@@ -46,6 +46,7 @@ Using this, the testing labs will also have a single place to check in with all 
 # Implementation Video:
  
  https://youtu.be/NCCXAgOLxQI
+ https://docs.google.com/presentation/d/1_rY8_yDaeLyqM2j8ItVSv1t8q3Ro3SzguGGeMJekQsQ/edit#slide=id.gcb9a0b074_1_131
  
 # FRONTEND
 
