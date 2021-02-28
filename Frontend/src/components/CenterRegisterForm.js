@@ -14,7 +14,7 @@ import {
   RadioGroup,
   FormControl,
   FormControlLabel,
-  FormLabel, 
+  FormLabel,
   InputLabel,
   MenuItem,
   Checkbox,
@@ -601,13 +601,8 @@ export class CenterRegisterForm extends Component {
             size="lg"
             name="Terms & Conditions"
             head="Read The Terms And Conditions Carefully"
-            text="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do 
-                        eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim 
-                        ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut 
-                        aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit
-                         in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur 
-                         sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt 
-                         mollit anim id est laborum."
+            text="The protal is not responsible for any mishaps in the test centre.If you cancel an appointment of the user
+            that can in further run decrease your positive credibility decreasing the capacity per slot of the test centre slot."
             show={ModalShow}
             onHide={() => this.handleModal(false)}
             onAgree={() => this.register(values)}
@@ -626,11 +621,11 @@ export class CenterRegisterForm extends Component {
 
                 <div className="reg-col">
                   <div className="txtfld">
-                    <label htmlFor="username">Facility Name</label>
+                    <label style={{marginTop:"5vh",marginBottom:"-2vh",marginLeft:"2vw"}}>Facility Name</label>
                     {this.dropdownShow(dropdown,FacilityName)}
                   </div>
                   
-                  <div className="textfld" style={{}}>
+                  <div className="txtfld" style={{width:"20vw",marginLeft:"46.5vw"}}>
                   <TextField
                     placeholder="Enter the Capacity per Slot"
                     label="Capacity per Slot"
@@ -643,7 +638,7 @@ export class CenterRegisterForm extends Component {
                     required
                   />
                   </div>
-                  <div className="textfld" style={{}}>
+                  <div className="txtfld" style={{width:"20vw",marginLeft:"46.5vw"}}>
                   <TextField
                     placeholder="Enter the Price"
                     label="Price"
@@ -657,13 +652,14 @@ export class CenterRegisterForm extends Component {
                     required
                   />
                   </div>
-              
+                  <br />
                   <div className="btn2">
                   {!isLoading && !isLoaded && <Button
                        style={{
                             border: "5px solid bisque",
                             backgroundColor: "white",
                             color: "black",
+                            marginLeft:"10vw"
                           }}
 
                         variant="contained"
@@ -673,9 +669,9 @@ export class CenterRegisterForm extends Component {
                       </Button>}
                   </div>
                   <br /><br />
-                {facilityShow}
-                <br /><br /><br />
-                  <br /><br /><br />
+                  <br /><br />
+                <div className="txtfld">{facilityShow}</div>
+                <br /><br />
                   <div className="btn1">
                     {!isLoading && !isLoaded && <Button
                        style={{

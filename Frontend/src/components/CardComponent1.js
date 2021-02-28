@@ -26,7 +26,7 @@ const useStyles = makeStyles((theme) => ({
     transition: theme.transitions.create('transform', {
       duration: theme.transitions.duration.shortest,
     }),
-  }, 
+  },
   right: {
     color:"white",
     textAlign:'right',

@@ -4,7 +4,7 @@ import validateInfo from './error.js';
 import { Link,Redirect } from 'react-router-dom';
 import Axios from "axios";
 import TnCModal from "./TnCModal";
- import {
+import {
   TextField,
   Button,
   Container,
@@ -149,13 +149,10 @@ export class RegisterForm extends Component {
         size="lg"
         name="Terms & Conditions"
         head="Read The Terms And Conditions Carefully"
-        text="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do 
-                    eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim 
-                    ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut 
-                    aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit
-                     in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur 
-                     sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt 
-                     mollit anim id est laborum."
+        text="
+        The portal is not responsible for any mishaps in the test centre. 
+        If you cancel an appointment after booking, you'll be given a penalty 
+        that you'll have to pay on your next appointment. "
         show={ModalShow}
         onHide={() => this.handleModal(false)}
         onAgree={() => this.register(values)}
@@ -373,7 +370,11 @@ export class RegisterForm extends Component {
                   {!isLoading && !isLoaded && <Button
                       // color="primary"
                       variant="contained"
-                      style={{backgroundColor:'a5a89f'}}
+                       style={{
+                            border: "5px solid bisque",
+                            backgroundColor: "white",
+                            color: "black",
+                          }}
                       onClick={!errors.final ? ()=> this.handleFaulty() : () => this.handleModal(true)  }
                     >
                       Register

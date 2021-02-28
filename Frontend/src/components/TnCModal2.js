@@ -25,7 +25,7 @@ function TnCModal2(props) {
     });
   };
   return (
-    <Modal 
+    <Modal
     style={{backgroundColor:"linear-gradient(315deg, #b8c6db 0%, #f5f7fa 74%)"}}
     show={props.show} 
       onHide={props.onHide}
@@ -43,8 +43,8 @@ function TnCModal2(props) {
         <p>
           {props.text}
           <TextField
-                  placeholder="Enter Otp"
-                  label="Otp"
+                  placeholder="Enter OTP"
+                  label="OTP"
                   variant="outlined"
                   value={otp}
                   onChange={e => setOtp(e.target.value)}
@@ -55,7 +55,7 @@ function TnCModal2(props) {
           <br />
           <TextField
                   placeholder="ID NUMBER"
-                  label="Id Number"
+                  label="ID Number"
                   variant="outlined"
                   value={idnum}
                   onChange={e => setIdnum(e.target.value)}

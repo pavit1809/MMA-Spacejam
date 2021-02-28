@@ -12,7 +12,7 @@ function Alert(props) {
   return <MuiAlert elevation={6} variant="filled" {...props} />;
 }
 export class CenterReviews extends Component {
-  state= { 
+  state= {
     val:100
   };
   render() {

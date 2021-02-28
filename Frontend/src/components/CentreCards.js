@@ -21,7 +21,7 @@ export class CentreCards extends React.Component {
   };
   handleChange = (input) => (e) => {
     this.setState({ [input]: e.target.value });
-  }; 
+  };
   handleSlot = (x, y) => {
     // console.log(x);
     // this.setState({CentreValue:x});

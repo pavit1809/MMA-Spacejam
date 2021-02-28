@@ -27,7 +27,7 @@ function TnCModal(props) {
       dialogClassName="modal-60w"
       className="special_modal"
       centered
-    > 
+    >
       <Modal.Header closeButton>
         <Modal.Title >
           {props.name}

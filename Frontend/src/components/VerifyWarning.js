@@ -25,7 +25,7 @@ export class VerifyWarning extends Component {
     }=this.state;
     const data={
       // check,
-    }; 
+    };
     return(
     <div>
     {check && this.handleCheck()}

@@ -14,7 +14,7 @@ class CenterLoginNavbar extends Component {
     loggedOut:false,
     succeed:false,
     userClicked:false,
-    homeClicked:true, 
+    homeClicked:true,
     logOutClicked:false
   };
 

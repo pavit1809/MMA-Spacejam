@@ -7,6 +7,7 @@ import Verify from './components/Verify';
 import CenterVerify from './components/CenterVerify';
 import Login from './components/Login';
 import CenterLogin from './components/CenterLogin';
+import CenterProfile from './components/CenterProfile';
 import LoginHome from './components/LoginHome';
 import CenterLoginHome from './components/CenterLoginHome';
 import CenterSendResult from './components/CenterSendResult';
@@ -30,6 +31,7 @@ function App() {
           <Route path='/centerVerify' exact component={CenterVerify} />
           <Route path='/login' exact component={Login} />
           <Route path='/centerLogin' exact component={CenterLogin} />
+          <Route path='/centerProfile' exact component={CenterProfile} />
           <Route path='/centerLoginHome' exact component={CenterLoginHome} />
           <Route path='/centerSendResult' exact component={CenterSendResult} />
           <Route path='/centerAppOfDay' exact component={CenterAppOfDay} />

@@ -10,10 +10,10 @@ import * as actionTypes from './store/actions'
 import {connect} from 'react-redux'
 
 export class CenterVerify extends Component {
-	state= {
+  state= {
     auth:true,
     auth1:false,
-    auth2:false, 
+    auth2:false,
   };
   authenticate = (data) =>{
     this.setState({auth:false});

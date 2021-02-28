@@ -22,7 +22,7 @@ export class selectionPage1 extends Component {
       })
       .catch((err) => {
         console.log("Invalid Route");
-         this.setState({auth1:true});
+        this.setState({auth1:true});
       }); 
   };
   render() {

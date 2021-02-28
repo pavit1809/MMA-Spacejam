@@ -15,7 +15,7 @@ import {connect} from 'react-redux'
 export class CenterOtpVerification extends Component {
 
   state = {
-    counter:30, 
+    counter:30,
     otp1:0,
     otp2:0,
     complete:false,

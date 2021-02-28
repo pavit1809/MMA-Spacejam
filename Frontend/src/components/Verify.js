@@ -10,7 +10,7 @@ import * as actionTypes from './store/actions'
 import {connect} from 'react-redux'
 
 export class Verify extends Component {
-	state= {
+  state= {
     auth:true,
     auth1:false,
     auth2:false,
@@ -26,7 +26,7 @@ export class Verify extends Component {
         console.log("Invalid Route");
         this.setState({auth1:true});
       }); 
-  }; 
+  };
   render() {
     const{ 
       auth,

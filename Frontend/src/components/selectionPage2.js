@@ -9,7 +9,7 @@ import {connect} from 'react-redux'
 import Axios from "axios";
 
 export class selectionPage1 extends Component {
-	state= {
+  state= {
     auth:true,
     auth1:false,
     auth2:false,
@@ -23,7 +23,7 @@ export class selectionPage1 extends Component {
       })
       .catch((err) => {
         console.log("Invalid Route");
-         this.setState({auth1:true});
+        this.setState({auth1:true});
       }); 
   };
   render() {

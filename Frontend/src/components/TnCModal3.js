@@ -22,7 +22,7 @@ function TnCModal3(props) {
       }
     });
   };
-  return ( 
+  return (
     <Modal
     style={{backgroundColor:"linear-gradient(315deg, #b8c6db 0%, #f5f7fa 74%)"}}
     show={props.show} 

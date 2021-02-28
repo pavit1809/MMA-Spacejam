@@ -26,7 +26,7 @@ export class LoginHome extends Component {
         this.setState({auth1:true});
       }); 
   };
-  render() { 
+  render() {
     const{ 
       auth,
       auth1,

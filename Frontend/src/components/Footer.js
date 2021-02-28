@@ -19,7 +19,7 @@ function Footer() {
             <Link to='/'>Github</Link>
             <Link to='/'>Linkedin</Link>
           </div>
-           
+          
         </div>
         <div className='footer-link-wrapper'>
           <div className='footer-link-items'>

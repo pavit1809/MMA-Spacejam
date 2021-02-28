@@ -8,7 +8,7 @@ import TnCModal from "./TnCModal";
 import { Button } from "react-bootstrap";
 import * as actionTypes from './store/actions'
 import {connect} from 'react-redux'
- 
+
 
 export class ParticularCard extends React.Component {
   state = {
@@ -58,7 +58,7 @@ export class ParticularCard extends React.Component {
       ModalShow3,
       disableSuccess,
       proceedToHome,
-	client
+  client
     } = this.state;
     // const { CentreValue, userInfo, slots } = this.props; /* tochange */
     const values={
@@ -72,13 +72,10 @@ export class ParticularCard extends React.Component {
         size="lg"
         name="Terms & Conditions"
         head="Read The Terms And Conditions Carefully"
-        text="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do 
-                    eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim 
-                    ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut 
-                    aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit
-                     in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur 
-                     sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt 
-                     mollit anim id est laborum."
+        text="Please check your time slot details, test name, date selected and test center details. 
+        You're booking an appointment at your own discretion. The portal is not responsible for any 
+        mishaps in the test centre. If you cancel an appointment after booking, you'll be given a 
+        penalty that you'll have to pay on your next appointment."
         show={ModalShow1}
         onHide={() => this.handleModal1(false)}
         onAgree={() => this.success(this.props.userInfo,this.props.CentreValue,selectedTime)}
@@ -89,9 +86,7 @@ export class ParticularCard extends React.Component {
         size="sm"
         name="Success"
         head="Your appointment has been booked successfully."
-        text="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do 
-                    eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim 
-                    ad minim veniam."
+        text="Please visit tests tab to view your appointment details and post your reviews."
         show={ModalShow2}
         onHide={() => this.handleModal2(false)}
         onAgree={() => this.setState({proceedToHome:true})}
@@ -127,7 +122,7 @@ export class ParticularCard extends React.Component {
               </div>
               <div className="center-details">
                 
-                  <b>PhoneNo: </b>
+                  <b>Phone Number: </b>
                   {this.props.CentreValue.cen.PhoneNo}
                 
               </div>

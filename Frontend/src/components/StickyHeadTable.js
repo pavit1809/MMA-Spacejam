@@ -25,7 +25,7 @@ function createData(Review, stars) {
 const useStyles = makeStyles({
   root: {
     width: '100%',
-  }, 
+  },
   container: {
     maxHeight: 200,
   },

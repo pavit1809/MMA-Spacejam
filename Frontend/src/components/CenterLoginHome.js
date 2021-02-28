@@ -10,7 +10,7 @@ import "./CenterLoginHome.css";
 import {Button} from 'react-bootstrap';
 
 export class CenterLoginHome extends Component {
-  state= { 
+  state= {
     auth:true,
     auth1:false,
     auth2:false,

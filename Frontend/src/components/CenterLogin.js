@@ -13,7 +13,7 @@ class CenterLogin extends Component {
   state = {
     success: false,
     email: "0",
-    password: 0, 
+    password: 0,
     isLoadingL: false,
     isLoadedL: false,
     isFaultyL: false,

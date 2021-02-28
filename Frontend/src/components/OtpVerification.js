@@ -13,7 +13,7 @@ import * as actionTypes from './store/actions'
 import {connect} from 'react-redux'
 
 export class OtpVerification extends Component {
- 
+
   state = {
     counter:30,
     otp1:0,

@@ -13,14 +13,17 @@ import {
   FormLabel,
   Radio,
   RadioGroup,
-
+  Select,
+  MenuItem
 }
   from '@material-ui/core';
-import './ProfileView.css'
+import DeleteOutlinedIcon from '@material-ui/icons/DeleteOutlined';
+import Table from 'react-bootstrap/Table'
+import './CenterProfileView.css'
 import * as actionTypes from './store/actions'
 import {connect} from 'react-redux'
 
-export class ProfileView extends React.Component {
+export class CenterProfileView extends React.Component {
   state = {
     editProfile:false,
     x:true,
@@ -32,34 +35,34 @@ export class ProfileView extends React.Component {
     sendPhoneOtp:false,
     verifiedEmailOtp:true,
     verifiedPhoneOtp:true,
-    IdType:"",
-    IdentificationIdNumber:"",
+    Address:"",
+    LicenseNum:"",
     NearestLandmark:"",
     City:"",
     Pincode:"",
     State:"",
     Country:"",
     Email:"",
-    PhoneNumber:"",
+    PhoneNo:"",
     otp1:"",
     otp2:"",
     tempEmail:"",
-    tempPhoneNumber:"",
+    tempPhoneNo:"",
     Validitypassword:"",
-    testInfo1:"",
     succeed1:false,
     Password:"",
     id:"",
-    userInfoPseudo:"",
+    centerInfoPseudo:"",
     modal:false,
-    proceed:false
+    proceed:false,
+    facilities:[],
+    facilityShow:"",
+    FacilityName:"",
+    CapacityperSlot:"",
+    Price:"",
+    dropdown:["Diabetes","Thyroid","Thypoid","CT Scan","MRI","Thermal Scan","COVID-19"],
+    len:0
   };
-
-  getInitials = (x) =>{
-    let text = x.slice(0,1).toUpperCase();
-    return text;
-  };
-
   start = () => {
     this.setState({['ct']: 30});
     this.setState({['complete']: false});
@@ -106,30 +109,35 @@ export class ProfileView extends React.Component {
     this.setState({x:true});
   };
 
-  copyToTemp = (data) => {
+  copyToTemp = (data,x) => {
     this.setState({x:false})
-    this.setState({IdType:data.IdType});
-    this.setState({IdentificationIdNumber:data.IdentificationIdNumber});
+    this.setState({Address:data.Address});
+    this.setState({LicenseNum:data.LicenseNum});
     this.setState({NearestLandmark:data.NearestLandmark});
     this.setState({City:data.City});
     this.setState({Pincode:data.Pincode});
     this.setState({State:data.State});
     this.setState({Country:data.Country});
     this.setState({Email:data.Email});
-    this.setState({PhoneNumber:data.PhoneNumber});
+    this.setState({PhoneNo:data.PhoneNo});
     this.setState({tempEmail:data.Email});
-    this.setState({tempPhoneNumber:data.PhoneNumber});
+    this.setState({tempPhoneNo:data.PhoneNo});
     this.setState({Password:""});
     this.setState({id:data._id});
+    this.setState({facilities:x});
+    this.setState({len:x.length});
+    console.log(2,x,x.length)
+    this.handleShow(x,x.length);
+
   };
 
-  handleOtp = (userInfo,id,value,flag) =>{
+  handleOtp = (centerInfo,id,value,flag) =>{
     if(flag==0){
       
       //AXIOS
       this.start();
-      const data={userInfo,id,value,flag};
-      Axios.post("http://localhost:5000/user/sendotp",data)
+      const data={centerInfo,id,value,flag};
+      Axios.post("http://localhost:5000/center/sendotp",data)
       .then((res) => {
         this.setState({sendEmailOtp:true});
         this.setState({verifiedEmailOtp:false});
@@ -142,8 +150,8 @@ export class ProfileView extends React.Component {
      
       //AXIOS
       this.start1();
-      const data={userInfo,id,value,flag};
-      Axios.post("http://localhost:5000/user/sendotp",data)
+      const data={centerInfo,id,value,flag};
+      Axios.post("http://localhost:5000/center/sendotp",data)
       .then((res) => {
         this.setState({sendPhoneOtp:true});
         this.setState({verifiedPhoneOtp:false});
@@ -154,11 +162,11 @@ export class ProfileView extends React.Component {
     }
     
   };
-  verifyOtp = (userInfo,otp,flag,id,value) => {
+  verifyOtp = (centerInfo,otp,flag,id,value) => {
     if(flag==0){
       //AXIOS
-      const data={userInfo,id,otp,flag};
-      Axios.post("http://localhost:5000/user/verifyotponupd",data)
+      const data={centerInfo,id,otp,flag};
+      Axios.post("http://localhost:5000/center/verifyotponupd",data)
       .then((res) => {
         this.setState({verifiedEmailOtp:true});
         this.setState({tempEmail:value});
@@ -172,11 +180,11 @@ export class ProfileView extends React.Component {
     }
     else{
       //AXIOS
-      const data={userInfo,id,otp,flag};
-      Axios.post("http://localhost:5000/user/verifyotponupd",data)
+      const data={centerInfo,id,otp,flag};
+      Axios.post("http://localhost:5000/center/verifyotponupd",data)
       .then((res) => {
         this.setState({verifiedPhoneOtp:true})
-        this.setState({tempPhoneNumber:value})
+        this.setState({tempPhoneNo:value})
         this.setState({sendPhoneOtp:false});
         this.setState({otp2:""});
       })
@@ -185,51 +193,115 @@ export class ProfileView extends React.Component {
       });
     }
   };
-  EditDetails = (userInfo,data) =>{
+  EditDetails = (centerInfo,data) =>{
     //AXIOS
-    const ret={userInfo,data}
-    Axios.post("http://localhost:5000/user/update",ret)
+    const ret={centerInfo,data}
+    Axios.post("http://localhost:5000/center/update",ret)
       .then((res) => {
         this.setState({editProfile:false});
-        // this.setState({userInfoPseudo:res});
-        this.props.onChangeUserInfo(res);
+        // this.setState({centerInfoPseudo:res});
+        this.props.onChangecenterInfo(res);
         this.setState({modal:true});
       })
       .catch((err) => {
         console.log("Axios", err);
       });
   };
-  getTests = (data) =>{
-    const userInfo = {userInfo:data}
-      Axios.post("http://localhost:5000/user/allappointments",userInfo)
-      .then((res) => {
-          this.setState({testInfo:res.data});   
-          this.setState({['succeed1']:true});
-
-      })
-      .catch((err) => {
-        console.log("Axios", err);
-      });
-
-  };
   handlemodal = (x) => {
     this.setState({modal:x})
   };
   handleproceed = () => {
       window.location.reload();
-  }
+  };
+  handleChange1 = input => e => {
+    this.setState({ [input]: e.target.value });
+  };
+  handleDelete = (i1,facilities,len) =>{
+    const PseudoFacilities=[];
+    if(facilities.length>0){
+      facilities.map((value,i)=> (
+        i!=i1 ? PseudoFacilities.push(value) : null
+      ));
+    }
+    this.setState({facilities:PseudoFacilities});
+    this.handleShow(PseudoFacilities,len);
+  };
+
+  handleAddAnother = (FacilityName,CapacityperSlot,Price,facilities,len) =>{
+    const Facility = {FacilityName,CapacityperSlot,Price};
+    const PseudoFacilities=[];
+    if(facilities.length>0){
+      facilities.map(value => PseudoFacilities.push(value));
+    }
+    if(FacilityName!=="" && CapacityperSlot!=="" && facilities!=="")
+    {
+      PseudoFacilities.push(Facility);
+      this.setState({FacilityName:""})
+      this.setState({CapacityperSlot:""})
+      this.setState({Price:""})
+      this.setState({facilities:PseudoFacilities})
+    }
+    this.handleShow(PseudoFacilities,len);
+  };
+
+  handleShow = (PseudoFacilities,len) =>{
+    var code=[];
+    console.log('hey');
+    console.log(1,PseudoFacilities);
+    if(PseudoFacilities.length>0)
+    {
+      code.push(<Table responsive="lg" size="sm" striped bordered hover >
+                <thead>
+                  <tr>
+                    <th>#</th>
+                    <th>Facility</th>
+                    <th>Capacity</th>
+                    <th>Price</th>
+                    <th>Delete</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {PseudoFacilities.map((value,i) => (
+                  <tr>
+                    <td>{i+1}</td>
+                    <td>{value.FacilityName}</td>
+                    <td>{value.CapacityperSlot}</td>
+                    <td>{value.Price}</td>
+                    <td>{i>=len && <DeleteOutlinedIcon onClick={()=>this.handleDelete(i,PseudoFacilities,len)}/>}</td>
+                  </tr>
+                  ))}
+                </tbody>
+              </Table>
+      )
+    }
+        this.setState({facilityShow:code})
+  };
+  dropdownShow = (data,FacilityName) => {
+    return(
+      <>
+      <Select required displayEmpty value={FacilityName} onChange={this.handleChange('FacilityName')} style={{margin:'5px',minWidth:'80px'}} variant="outlined">
+        <MenuItem value="" disabled><em>None</em></MenuItem>
+        {data.length>0 && data.map((value,i) => {
+          return(
+              <MenuItem value={value}>{value}</MenuItem >
+            )
+        })}
+      </Select>
+      </>
+      )
+  };
   render() {
     const { 
       editProfile,
-      IdType,
-      IdentificationIdNumber,
+      Address,
+      LicenseNum,
       NearestLandmark,
       City,
       Pincode,
       State,
       Country,
       Email,
-      PhoneNumber,
+      PhoneNo,
       x,
       sendPhoneOtp,
       sendEmailOtp,
@@ -238,40 +310,52 @@ export class ProfileView extends React.Component {
       verifiedPhoneOtp,
       verifiedEmailOtp,
       tempEmail,
-      tempPhoneNumber,
+      tempPhoneNo,
       Validitypassword,
       testInfo,
       succeed1,
       Password,
       id,
-      userInfoPseudo,
+      len,
+      centerInfoPseudo,
       modal,
       proceed,
       ct,ct1,
-      complete,complete1
+      complete,
+      complete1,
+      facilities,
+      FacilityName,
+      CapacityperSlot,
+      Price,
+      facilityShow,
+      dropdown
+
     } = this.state;
-    const { userInfo } = this.props; 
+    const { centerInfo,facilitiesList } = this.props; 
     const tempValues={
-      IdType,
-      IdentificationIdNumber,
+      Address,
+      LicenseNum,
       NearestLandmark,
       City,
       Pincode,
       State,
       Country,
       Email,
-      PhoneNumber,
+      PhoneNo,
       Password,
       Validitypassword,
+      facilities,
       id
     }
     const values ={
-      userInfo,
+      centerInfo,
       testInfo
     }
     return (
       <div className="pvbody">
-      {x && this.copyToTemp(userInfo.data.user)}
+      {console.log(facilitiesList)}
+      {x && this.copyToTemp(centerInfo.data.center,facilitiesList)}
+      
       <TnCModal
         size="lg"
         name="Success"
@@ -284,27 +368,26 @@ export class ProfileView extends React.Component {
         onAgree={() => this.handleproceed()}
       />
       <div style={{marginLeft:"5vw"}} className="row">
-        <Avatar style={{width:'80px',height:'80px',backgroundColor:'#a5a89f' , marginLeft:'40px', marginTop:'20px'}}><h1>{this.getInitials(userInfo.data.user.UserName)}</h1></Avatar>
-        <div  className="col" >
-            <Typography style={{width:'80px',height:'80px', marginLeft:'25px', marginTop:'20px',whiteSpace:'nowrap',fontSize:'40px'}}>{userInfo.data.user.UserName}</Typography>
+        <Avatar style={{width:'80px',height:'80px',backgroundColor:'#a5a89f' , marginLeft:'40px', marginTop:'20px'}} src={centerInfo.data.center.FrontImage} />
+        <div >
+            <Typography style={{width:'80px',height:'80px', marginLeft:'40px', marginTop:'20px',whiteSpace:'nowrap',fontSize:'40px'}}>{centerInfo.data.center.Name}</Typography>
           <div className="row">
-              <Typography style={{marginTop:'-30px',marginLeft:'40px',fontSize:'25px'}}>Age: {userInfo.data.user.Age}</Typography>
-              <Typography style={{marginTop:'-30px',marginLeft:'40px',fontSize:'25px'}}>Gender: {userInfo.data.user.Gender}</Typography>
+              <Typography style={{marginTop:'-30px',marginLeft:'50px',fontSize:'20px'}}>Opening Time: {centerInfo.data.center.OpeningTime}</Typography>
+              <Typography style={{marginTop:'-30px',marginLeft:'40px',fontSize:'20px'}}>Closing Time: {centerInfo.data.center.ClosingTime}</Typography>
           </div>
         </div> 
       </div>
         <FormControlLabel
           style={{
-
             position: 'absolute',
             right: '20px',
             top: '70px',
           }}
           control={
             <Switch
+              style={{color:"#a5a89f"}}
               checked={editProfile}
               onChange={this.handleEdit('editProfile')}
-              style={{color:"#a5a89f"}}
               color="primary"
             />
           }
@@ -314,43 +397,15 @@ export class ProfileView extends React.Component {
           
           <div className="profile-details"> 
                 
-                <div className="txtfld2">
-                <FormControl component="fieldset">
-                  <FormLabel component="legend">ID Type</FormLabel>
-                  <RadioGroup row value={IdType} onChange={this.handleChange('IdType')}>
-                    <FormControlLabel
-                      value="Voter ID"
-                      control={<Radio style={{color:"#a5a89f"}} />}
-                      label="Voter ID"
-                      labelPlacement="end"
-                      disabled={!editProfile}
-                    />
-                    <FormControlLabel
-                      value="Aadhaar Number"
-                      control={<Radio style={{color:"#a5a89f"}} />}
-                      label="Aadhaar Number"
-                      labelPlacement="end"
-                      disabled={!editProfile}
-                    />
-                    <FormControlLabel
-                      value="Passport"
-                      control={<Radio style={{color:"#a5a89f"}} />}
-                      label="Passport"
-                      labelPlacement="end"
-                      disabled={!editProfile}
-                    />
-                  </RadioGroup>
-                </FormControl>
-                <br />
-                </div>
+              
                 <div className="txtfld1">
                 <TextField
                   disabled={!editProfile}
-                  value={IdentificationIdNumber}
-                  placeholder="Enter your Identification Id Number"
-                  label="Identification Id Number"
+                  value={LicenseNum}
+                  placeholder="Enter your License Number"
+                  label="License Number"
                   variant="outlined"
-                  onChange={this.handleChange('IdentificationIdNumber')}
+                  onChange={this.handleChange('LicenseNum')}
                   type="text"
                   margin="normal"
                   size="small"
@@ -358,6 +413,21 @@ export class ProfileView extends React.Component {
                 />
                 <br />
                 </div>
+                <div className="txtfld1">
+                  <TextField
+                    value={Address}
+                    disabled={!editProfile}
+                    size="small"
+                    placeholder="Enter you Address"
+                    label="Address"
+                    variant="outlined"
+                    onChange={this.handleChange('Address')}
+                    type="text"
+                    margin="normal"
+                    fullWidth
+                  />
+                  <br />
+                  </div>
 
                   <div className="txtfld1">
                   <TextField
@@ -435,7 +505,7 @@ export class ProfileView extends React.Component {
                   <br />
                   </div>
                 <div className="row">
-                  <div className="txtfld1" style={{marginLeft:"10.5vw"}}>
+                  <div className="txtfld1" style={{marginLeft:"11vw"}}>
                   <TextField
                     value={Email}
                     disabled={!editProfile}
@@ -451,17 +521,17 @@ export class ProfileView extends React.Component {
                   </div>
                   { !(Email==tempEmail) &&
                     <>
-                    <div style={{marginLeft:'20px',marginTop:'25px'}}>
+                    <div style={{marginLeft:'10px',marginTop:'25px'}}>
                       <Button
-                       style={{
+                        style={{
                             border: "5px solid bisque",
                             backgroundColor: "white",
                             color: "black",
                           }}
                         variant="success"
                         size="sm"
-                        disabled={(!editProfile && (Email==userInfo.data.user.Email) ) || !complete}
-                        onClick={() => this.handleOtp(userInfo,userInfo.data.user._id,Email,0)}
+                        disabled={(!editProfile && (Email==centerInfo.data.center.Email) ) || !complete}
+                        onClick={() => this.handleOtp(centerInfo,centerInfo.data.center._id,Email,0)}
                       >
                       {parseInt(Object.values({ct}))==0 ? "Send Otp" :"Send Otp ( "+ parseInt(Object.values({ct})) + " sec )"}
 
@@ -469,7 +539,7 @@ export class ProfileView extends React.Component {
                     </div>
                     { sendEmailOtp && 
                       <>
-                        <div style={{marginLeft:'20px',marginTop:'10px'}}>
+                        <div style={{marginLeft:'10px',marginTop:'10px'}}>
                         <TextField
                           disabled={!editProfile}
                           size="small"
@@ -482,9 +552,9 @@ export class ProfileView extends React.Component {
                           fullWidth
                         />
                         </div>
-                        <div style={{marginLeft:'20px',marginTop:'25px'}}>
+                        <div style={{marginLeft:'10px',marginTop:'25px'}}>
                           <Button
-                           style={{
+                            style={{
                             border: "5px solid bisque",
                             backgroundColor: "white",
                             color: "black",
@@ -492,7 +562,7 @@ export class ProfileView extends React.Component {
                             variant="success"
                             size="sm"
                             disabled={!editProfile || (otp1.length<=5)}
-                            onClick={() => this.verifyOtp(userInfo,otp1,0,userInfo.data.user._id,Email)}
+                            onClick={() => this.verifyOtp(centerInfo,otp1,0,centerInfo.data.center._id,Email)}
                           >
                           Verify OTP
                           </Button>
@@ -503,41 +573,41 @@ export class ProfileView extends React.Component {
                   }
                   </div>
                 <div className="row">
-                  <div className="txtfld1" style={{marginLeft:"10.5vw"}}>
+                  <div className="txtfld1" style={{marginLeft:"11vw"}}>
                   <TextField
-                    value={PhoneNumber}
+                    value={PhoneNo}
                     disabled={!editProfile}
                     size="small"
                     placeholder="Enter your Phone Number"
                     label="Phone Number"
                     variant="outlined"
-                    onChange={this.handleChange('PhoneNumber')}
+                    onChange={this.handleChange('PhoneNo')}
                     type="number" inputProps={{ min:1000000000, max: 9999999999, step: 1}}
                     margin="normal"
                     fullWidth
                   />
                   </div>
-                  { !(PhoneNumber==tempPhoneNumber) &&
+                  { !(PhoneNo==tempPhoneNo) &&
                     <>
 
-                    <div style={{marginLeft:'20px',marginTop:'25px'}}>        
+                    <div style={{marginLeft:'10px',marginTop:'25px'}}>        
                        <Button
-                        style={{
+                       style={{
                             border: "5px solid bisque",
                             backgroundColor: "white",
                             color: "black",
                           }}
                          variant="success"
                          size="sm"
-                         disabled={(!editProfile  && (PhoneNumber==userInfo.data.user.PhoneNumber) ) || !complete1}
-                         onClick={() => this.handleOtp(userInfo,userInfo.data.user._id,PhoneNumber,1)}
+                         disabled={(!editProfile  && (PhoneNo==centerInfo.data.center.PhoneNo) ) || !complete1}
+                         onClick={() => this.handleOtp(centerInfo,centerInfo.data.center._id,PhoneNo,1)}
                        >
                        {parseInt(Object.values({ct1}))==0 ? "Send Otp" :"Send Otp ( "+ parseInt(Object.values({ct1})) + " sec )"}
                        </Button>
                     </div>   
                     { sendPhoneOtp &&
                       <>
-                        <div style={{marginLeft:'20px',marginTop:'10px'}}>
+                        <div style={{marginLeft:'10px',marginTop:'10px'}}>
                           <TextField
                             disabled={!editProfile}
                             size="small"
@@ -552,7 +622,7 @@ export class ProfileView extends React.Component {
                         </div>
                         <div style={{marginLeft:'10px',marginTop:'25px'}}>
                           <Button
-                           style={{
+                          style={{
                             border: "5px solid bisque",
                             backgroundColor: "white",
                             color: "black",
@@ -560,7 +630,7 @@ export class ProfileView extends React.Component {
                             variant="success"
                             size="sm"
                             disabled={!editProfile || (otp2.length<=5)}
-                            onClick={() => this.verifyOtp(userInfo,otp2,1,userInfo.data.user._id,PhoneNumber)}
+                            onClick={() => this.verifyOtp(centerInfo,otp2,1,centerInfo.data.center._id,PhoneNo)}
                           >
                           Verify OTP
                           </Button>
@@ -590,24 +660,64 @@ export class ProfileView extends React.Component {
           </div>
 
           <div>
-            <div style={{marginTop:'30px',marginLeft:'-60px'}}>
-              <Button
-               style={{
+            <div style={{marginTop:'-6vh',width:'25vw',marginLeft:"-5vw",padding:'7px 20px' ,  boxShadow: '0 1px 6px rgba(0, 0, 0, 0.12), 0 1px 4px rgba(0, 0, 0, 0.24)'}}>
+              <h4>{!editProfile ? " Facilites" : " Edit Facilities"} </h4>
+                {facilityShow}
+                {editProfile &&
+                  <>
+                  <div className="txtfld4">
+                    <label htmlFor="username">Facility Name</label>
+                    {this.dropdownShow(dropdown,FacilityName)}
+                  </div>
+                  <div className="txtfld4">
+                  <TextField
+                    size="small"
+                    placeholder="Enter the Capacity per Slot"
+                    label="Capacity per Slot"
+                    variant="outlined"
+                    value={CapacityperSlot}
+                    onChange={this.handleChange1('CapacityperSlot')}
+                    type="number" 
+                    margin="normal"
+                    fullWidth
+                    required
+                  />
+                  </div>
+                  <div className="txtfld4">
+                  <TextField
+                    placeholder="Enter the Price"
+                    size="small"
+                    label="Price"
+                    variant="outlined"
+                    value={Price}
+                    onChange={this.handleChange1('Price')}
+                    type="number"
+                    inputProps={{min:"0.01" ,step:"0.01"}}
+                    margin="normal"
+                    fullWidth
+                    required
+                  />
+                  <br />
+                  </div>
+                  <div>
+                  <Button
+                    style={{
                             border: "5px solid bisque",
                             backgroundColor: "white",
                             color: "black",
                           }}
-
-                variant="warning"
-                size="lg"
-                onClick={() => this.getTests(userInfo)}
-              >
-                View Your Tests  
-              </Button>
+                        variant="success"
+                        onClick={() => this.handleAddAnother(FacilityName,CapacityperSlot,Price,facilities,len)}
+                      >
+                        Add
+                      </Button>
+                  </div>
+                  </>
+                }
             </div>
             { editProfile   &&
             <>
-              <div className="txtfld3">
+              <div className="txtfld5" >
                   <TextField
                     placeholder={Password.length>0 ? "Enter your old password" :"Enter your password"} /*change as the password changes to old or nothing*/
                     label={Password.length>0 ? "Enter your old password to edit" :"Enter your password to edit"}
@@ -620,20 +730,20 @@ export class ProfileView extends React.Component {
                     autoComplete: 'new-password'
                    }}
                     disabled={!(editProfile &&
-                     ((((userInfo.data.user.IdType!=IdType ||
-                        userInfo.data.user.IdentificationIdNumber!=IdentificationIdNumber ||
-                        userInfo.data.user.NearestLandmark!=NearestLandmark ||
-                        userInfo.data.user.City!=City ||
-                        userInfo.data.user.Pincode!=Pincode ||
-                        userInfo.data.user.State!=State ||
-                        userInfo.data.user.Country!=Country || (Password.length>=8)) && (Email==userInfo.data.user.Email ||(Email==tempEmail && tempEmail!=userInfo.data.user.Email)) && (PhoneNumber==userInfo.data.user.PhoneNumber || (PhoneNumber==tempPhoneNumber && tempPhoneNumber!=userInfo.data.user.PhoneNumber))) ||
-                        (Email==userInfo.data.user.Email ||(Email==tempEmail && tempEmail!=userInfo.data.user.Email)) && (PhoneNumber==userInfo.data.user.PhoneNumber || (PhoneNumber==tempPhoneNumber && tempPhoneNumber!=userInfo.data.user.PhoneNumber))) && !(userInfo.data.user.IdType==IdType &&
-                        userInfo.data.user.IdentificationIdNumber==IdentificationIdNumber &&
-                        userInfo.data.user.NearestLandmark==NearestLandmark &&
-                        userInfo.data.user.City==City &&
-                        userInfo.data.user.Pincode==Pincode &&
-                        userInfo.data.user.State==State &&
-                        userInfo.data.user.Country==Country && userInfo.data.user.Email==Email && PhoneNumber==userInfo.data.user.PhoneNumber && Password.length<8)) 
+                     ((((centerInfo.data.center.Address!=Address ||
+                        centerInfo.data.center.LicenseNum!=LicenseNum ||
+                        centerInfo.data.center.NearestLandmark!=NearestLandmark ||
+                        centerInfo.data.center.City!=City ||
+                        centerInfo.data.center.Pincode!=Pincode ||
+                        centerInfo.data.center.State!=State ||
+                        centerInfo.data.center.Country!=Country || (Password.length>=8)) && (Email==centerInfo.data.center.Email ||(Email==tempEmail && tempEmail!=centerInfo.data.center.Email)) && (PhoneNo==centerInfo.data.center.PhoneNo || (PhoneNo==tempPhoneNo && tempPhoneNo!=centerInfo.data.center.PhoneNo))) ||
+                        (Email==centerInfo.data.center.Email ||(Email==tempEmail && tempEmail!=centerInfo.data.center.Email)) && (PhoneNo==centerInfo.data.center.PhoneNo || (PhoneNo==tempPhoneNo && tempPhoneNo!=centerInfo.data.center.PhoneNo))) && !(centerInfo.data.center.Address==Address &&
+                        centerInfo.data.center.LicenseNum==LicenseNum &&
+                        centerInfo.data.center.NearestLandmark==NearestLandmark &&
+                        centerInfo.data.center.City==City &&
+                        centerInfo.data.center.Pincode==Pincode &&
+                        centerInfo.data.center.State==State &&
+                        centerInfo.data.center.Country==Country && centerInfo.data.center.Email==Email && PhoneNo==centerInfo.data.center.PhoneNo && Password.length<8)) 
                     )
                   }
                     size="small"
@@ -644,7 +754,7 @@ export class ProfileView extends React.Component {
               </div>
               <div style={{marginTop:'30px',marginLeft:'60px'}}>
                 <Button
-                 style={{
+                style={{
                             border: "5px solid bisque",
                             backgroundColor: "white",
                             color: "black",
@@ -652,23 +762,23 @@ export class ProfileView extends React.Component {
                   variant="info"
                   size="lg"
                   disabled={Validitypassword.length<=7 || !(editProfile &&
-                    ((((userInfo.data.user.IdType!=IdType ||
-                      userInfo.data.user.IdentificationIdNumber!=IdentificationIdNumber ||
-                      userInfo.data.user.NearestLandmark!=NearestLandmark ||
-                      userInfo.data.user.City!=City ||
-                      userInfo.data.user.Pincode!=Pincode ||
-                      userInfo.data.user.State!=State ||
-                      userInfo.data.user.Country!=Country || (Password.length>=8)) && (Email==userInfo.data.user.Email ||(Email==tempEmail && tempEmail!=userInfo.data.user.Email)) && (PhoneNumber==userInfo.data.user.PhoneNumber || (PhoneNumber==tempPhoneNumber && tempPhoneNumber!=userInfo.data.user.PhoneNumber))) ||
-                      (Email==userInfo.data.user.Email ||(Email==tempEmail && tempEmail!=userInfo.data.user.Email)) && (PhoneNumber==userInfo.data.user.PhoneNumber || (PhoneNumber==tempPhoneNumber && tempPhoneNumber!=userInfo.data.user.PhoneNumber))) && !(userInfo.data.user.IdType==IdType &&
-                       userInfo.data.user.IdentificationIdNumber==IdentificationIdNumber &&
-                       userInfo.data.user.NearestLandmark==NearestLandmark &&
-                       userInfo.data.user.City==City &&
-                       userInfo.data.user.Pincode==Pincode &&
-                       userInfo.data.user.State==State &&
-                       userInfo.data.user.Country==Country && userInfo.data.user.Email==Email && PhoneNumber==userInfo.data.user.PhoneNumber && Password.length<8)) 
+                    ((((centerInfo.data.center.Address!=Address ||
+                      centerInfo.data.center.LicenseNum!=LicenseNum ||
+                      centerInfo.data.center.NearestLandmark!=NearestLandmark ||
+                      centerInfo.data.center.City!=City ||
+                      centerInfo.data.center.Pincode!=Pincode ||
+                      centerInfo.data.center.State!=State ||
+                      centerInfo.data.center.Country!=Country || (Password.length>=8)) && (Email==centerInfo.data.center.Email ||(Email==tempEmail && tempEmail!=centerInfo.data.center.Email)) && (PhoneNo==centerInfo.data.center.PhoneNo || (PhoneNo==tempPhoneNo && tempPhoneNo!=centerInfo.data.center.PhoneNo))) ||
+                      (Email==centerInfo.data.center.Email ||(Email==tempEmail && tempEmail!=centerInfo.data.center.Email)) && (PhoneNo==centerInfo.data.center.PhoneNo || (PhoneNo==tempPhoneNo && tempPhoneNo!=centerInfo.data.center.PhoneNo))) && !(centerInfo.data.center.Address==Address &&
+                       centerInfo.data.center.LicenseNum==LicenseNum &&
+                       centerInfo.data.center.NearestLandmark==NearestLandmark &&
+                       centerInfo.data.center.City==City &&
+                       centerInfo.data.center.Pincode==Pincode &&
+                       centerInfo.data.center.State==State &&
+                       centerInfo.data.center.Country==Country && centerInfo.data.center.Email==Email && PhoneNo==centerInfo.data.center.PhoneNo && Password.length<8)) 
                    )
                  }
-                  onClick={() => this.EditDetails(userInfo,tempValues)}
+                  onClick={() => this.EditDetails(centerInfo,tempValues)}
                 >
                   Edit Details  
                 </Button>
@@ -692,14 +802,14 @@ export class ProfileView extends React.Component {
 }
 const mapStateToProps = state => {
   return{
-    userInfo:state.userInfo,
+    centerInfo:state.centerInfo
   };
 };
 
 const mapDispatchToProps = dispatch =>{
   return{
-    onChangeUserInfo: (userInfo) => dispatch({type:actionTypes.CHANGE_STATE , userInfo:userInfo}),
+    onChangeCenterInfo: (centerInfo) => dispatch({type:actionTypes.CHANGE_CENTERINFO , centerInfo:centerInfo}),
   };
 };
 
-export default connect(mapStateToProps,mapDispatchToProps)(ProfileView);
+export default connect(mapStateToProps,mapDispatchToProps)(CenterProfileView);

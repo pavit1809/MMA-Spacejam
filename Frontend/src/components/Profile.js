@@ -32,7 +32,7 @@ export class Profile extends Component {
       auth1,
       auth2
     } = this.state;
-    return( 
+    return(
     <div>
       {auth && this.authenticate(this.props.userInfo)}
       {auth1 && <Redirect to={{

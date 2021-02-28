@@ -2,15 +2,15 @@
   background: linear-gradient(315deg, #b8c6db 0%, #f5f7fa 74%) ;
 }
 .reviews{
-	height:50vh;
-	width:50vw;
+  height:50vh;
+  width:50vw;
   padding:7px;
-	margin-bottom:20vh;
-	margin-left:5vw;
+  margin-bottom:20vh;
+  margin-left:5vw;
   box-shadow: -10px 25px 50px #a5a89f;
   border:2px solid bisque;
   border-radius: 10px;
-} 
+}
 .Button-Body {
   font-family: 'Poppins', sans-serif;
   margin: 0;
