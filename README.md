@@ -47,8 +47,9 @@ Using this, the testing labs will also have a single place to check in with all 
  
  https://youtu.be/NCCXAgOLxQI
  
- #FRONTEND
- # Getting Started with Create React App
+# FRONTEND
+
+## Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
@@ -79,3 +80,16 @@ Your app is ready to be deployed!
 
 See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
   
+# BACKEND
+## TO RUN ON LOCAL MACHINE 
+### COMMAND: `npm run dev` in Backend directory
+Open [http://localhost:5000](http://localhost:5000) to view it in the browser.
+
+1. Create a .env file in the backend-root directory on your local machine with the following format
+TEST_MAIL=(Mail ID for sending the cancellation messages and verifications emails)
+TEST_PASS=(Password of the mail ID)
+API_KEY=(API KEY for the HERE Platform)
+SECRET=(Secret for the vonage API service)
+VKEY=(Key for the vonage API service)
+SERVICE=(Service of the mail ID as in hotmail,yahoo,gmail etc)
+AUTHSRT=(Token for the authentication service)
