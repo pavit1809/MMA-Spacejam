@@ -43,13 +43,10 @@ Using this, the testing labs will also have a single place to check in with all 
      Nodejs<br>
      Flask App<br>
      
-# Implementation Video:
+# Implementation:
  
- https://youtu.be/NCCXAgOLxQI
-
-# Implementation PPT Link
-
-https://docs.google.com/presentation/d/1_rY8_yDaeLyqM2j8ItVSv1t8q3Ro3SzguGGeMJekQsQ/edit#slide=id.gcb9a0b074_1_131
+ ### Video: https://youtu.be/NCCXAgOLxQI
+ ### PPT: https://docs.google.com/presentation/d/1_rY8_yDaeLyqM2j8ItVSv1t8q3Ro3SzguGGeMJekQsQ/edit#slide=id.gcb9a0b074_1_131
  
 # FRONTEND
 
