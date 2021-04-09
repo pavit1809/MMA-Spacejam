@@ -143,8 +143,8 @@ router.post('/center/newotps',Authmiddleware,async (req,res)=>{
                   const otp2=RegistrationUtil1.GetOtp();
                   const emailbody=RegistrationUtil1.EmailBody(center.Email,otp1);
                   const messagebody=RegistrationUtil1.MessageBody(otp2);
-                  let emailinfo=await transporter.sendMail(emailbody);
-                  let messageinfo=await vonage.message.sendSms('Team',"91"+center.PhoneNumber,messagebody);
+                  // let emailinfo=await transporter.sendMail(emailbody);
+                  // let messageinfo=await vonage.message.sendSms('Team',"91"+center.PhoneNumber,messagebody);
                   center.RecentEmailOtps.push(otp1);
                   center.RecentMobileOtps.push(otp2);
                   await center.save();
@@ -360,14 +360,14 @@ router.post('/center/sendotp',Authmiddleware,async(req,res)=>{
             const otp=RegistrationUtil1.GetOtp();
             if (parseInt(req.body.flag)==0){     
                   const emailbody=RegistrationUtil1.EmailBody(req.body.value,otp);
-                  let emailinfo=await transporter.sendMail(emailbody);
+                  // let emailinfo=await transporter.sendMail(emailbody);
                   center.RecentEmailOtps.push(otp);
                   await center.save();
                   res.status(200).send("Otp sent successfully");
             }
             else{
                   const messagebody=RegistrationUtil.MessageBody(otp);
-                  let messageinfo=await vonage.message.sendSms('Team',"91"+user.PhoneNumber,messagebody);
+                  // let messageinfo=await vonage.message.sendSms('Team',"91"+user.PhoneNumber,messagebody);
                   center.RecentMobileOtps.push(otp);
                   await center.save();
                   res.status(200).send("Otp sent successfully");
